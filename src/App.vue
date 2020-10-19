@@ -56,6 +56,12 @@ export default {
           link.download = 'wallpaper.jpeg';
           link.href = dataUrl;
           link.click();
+          const img = new Image();
+          img.src = dataUrl;
+          document.body.appendChild(img);
+        })
+        .catch((error) => {
+          console.error('oops, something went wrong!', error);
         });
     }
   }
