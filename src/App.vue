@@ -38,24 +38,29 @@ export default {
       });
     },
     applyGradient() {
-      const screenHeight = 1792;
-      const screenWidth = 828;
-      const aspectRatio = '19.5:9';
+      const iphoneScreenHeight = 1792;
+      const iphoneScreenWidth = 828;
+      const iphoneAspectRatio = '19.5:9';
       const { image } = this.$refs;
       const imgWidth = image.clientWidth;
-      const remainingHeight = (screenHeight - image.clientHeight) / 2;
+      const remainingHeight = ((iphoneScreenHeight / 2) - image.clientHeight) / 2;
       const { top } = this.$refs;
       const { bottom } = this.$refs;
       top.setAttribute('style', `background: linear-gradient(${this.colorPalette[2]}, ${this.colorPalette[0]}); width: ${imgWidth}px; height: ${remainingHeight}px;`);
       bottom.setAttribute('style', `background: linear-gradient(${this.colorPalette[0]}, ${this.colorPalette[2]}); width: ${imgWidth}px; height: ${remainingHeight}px;`);
     },
     captureNewImage() {
-      htmlToImage.toJpeg(document.getElementById('image-container'), { quality: 0.95 })
+      const imageNode = document.getElementById('image-container');
+      htmlToImage.toJpeg(imageNode, { quality: 0.95 })
         .then((dataUrl) => {
           const link = document.createElement('a');
           link.download = 'wallpaper.jpeg';
           link.href = dataUrl;
-          link.click();
+          link.innerText = 'Download';
+          document.body.appendChild(link);
+        });
+      htmlToImage.toPng(imageNode)
+        .then((dataUrl) => {
           const img = new Image();
           img.src = dataUrl;
           document.body.appendChild(img);
