@@ -5,7 +5,7 @@
     <p>Change gradient color</p>
     <div>
       <span>Inner color</span>
-      <button @click="innerColorSelected = !innerColorSelected"  class="btn-toggle" :class="{toggled: innerColorSelected}"></button>
+      <button @click="innerColorSelected = !innerColorSelected"  class="btn-toggle" :class="{toggled: !innerColorSelected}"></button>
       <span>Outer color</span>
     </div>
     <div class="color-cards">
@@ -19,7 +19,7 @@
     <input type="file" accept="image/*" @change="displayImage" class="image-upload" />
     <button @click="captureNewImage">Display new wallpaper as image</button>
     <button @click.stop="downloadImage" id="download">Download image</button>
-    <img id="newWallpaper"/>
+    <div id="newWallpaper"/>
   </div>
 </template>
 
@@ -61,15 +61,16 @@ export default {
       const remainingHeight = (iphoneScreenHeight - image.clientHeight) / 2;
       const { top } = this.$refs;
       const { bottom } = this.$refs;
-      top.setAttribute('style', `background: linear-gradient(${this.innerColor}, ${this.outerColor}); width: ${imgWidth}px; height: ${remainingHeight}px;`);
-      bottom.setAttribute('style', `background: linear-gradient(${this.outerColor}, ${this.innerColor}); width: ${imgWidth}px; height: ${remainingHeight}px;`);
+      top.setAttribute('style', `background: linear-gradient(${this.outerColor}, ${this.innerColor}); width: ${imgWidth}px; height: ${remainingHeight}px;`);
+      bottom.setAttribute('style', `background: linear-gradient(${this.innerColor}, ${this.outerColor}); width: ${imgWidth}px; height: ${remainingHeight}px;`);
     },
     captureNewImage() {
       const imageNode = document.getElementById('image-container');
       htmlToImage.toPng(imageNode)
         .then((dataUrl) => {
-          const img = document.getElementById('newWallpaper');
+          const img = new Image();
           img.src = dataUrl;
+          document.getElementById('newWallpaper').appendChild(img);
         })
         .catch((error) => {
           console.error('oops, something went wrong!', error);
@@ -155,7 +156,7 @@ export default {
 
 #image-container {
   img {
-    max-height: 800px;
+    max-height: 700px;
   }
   .gradient {
     margin: 0 auto;
