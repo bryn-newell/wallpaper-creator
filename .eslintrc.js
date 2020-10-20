@@ -16,6 +16,7 @@ module.exports = {
     'max-len': 'off',
     'comma-dangle': 'off',
     'semi': 'warn',
-    'no-unused-vars': 'warn'
+    'no-unused-vars': 'warn',
+    'prefer-destructuring': 'warn'
   },
 };
