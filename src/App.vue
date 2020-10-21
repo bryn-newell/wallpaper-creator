@@ -92,7 +92,7 @@ export default {
     //         console.error('oops, something went wrong!', error);
     //       });
     //   }
-    },
+    // },
     selectColor(color) {
       if (this.innerColorSelected) {
         this.innerColor = color;
