@@ -17,7 +17,7 @@
       <div ref="bottom" class="gradient bottom"></div>
     </div>
     <input type="file" accept="image/*" @change="displayImage" class="image-upload" />
-    <button @click="captureNewImage">Display new wallpaper as image</button>
+    <!-- <button @click="captureNewImage">Display new wallpaper as image</button> -->
     <!-- <button @click.stop="downloadImage" id="download">Download image</button> -->
     <div id="newWallpaper"/>
   </div>
@@ -50,6 +50,7 @@ export default {
         this.innerColor = this.colorPalette[0];
         this.outerColor = this.colorPalette[2];
         this.applyGradient();
+        this.captureNewImage();
       });
     },
     applyGradient() {
@@ -70,7 +71,7 @@ export default {
         .then((dataUrl) => {
           const img = new Image();
           img.src = dataUrl;
-          document.getElementById('newWallpaper').appendChild(img);
+          document.body.appendChild(img);
         })
         .catch((error) => {
           console.error('oops, something went wrong!', error);
