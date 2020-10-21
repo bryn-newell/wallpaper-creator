@@ -18,7 +18,7 @@
     </div>
     <input type="file" accept="image/*" @change="displayImage" class="image-upload" />
     <button @click="captureNewImage">Display new wallpaper as image</button>
-    <button @click.stop="downloadImage" id="download">Download image</button>
+    <!-- <button @click.stop="downloadImage" id="download">Download image</button> -->
     <div id="newWallpaper"/>
   </div>
 </template>
@@ -76,21 +76,22 @@ export default {
           console.error('oops, something went wrong!', error);
         });
     },
-    downloadImage() {
-      // TO DO - this fires twice and will set the empty container as the href
-      const link = document.getElementById('download');
-      if (!link.href) {
-        const imageNode = document.getElementById('image-container');
-        htmlToImage.toJpeg(imageNode, { quality: 0.95 })
-          .then((dataUrl) => {
-            link.download = 'wallpaper.jpeg';
-            link.href = dataUrl;
-            link.click();
-          })
-          .catch((error) => {
-            console.error('oops, something went wrong!', error);
-          });
-      }
+    // downloadImage() {
+    //   // TO DO - this fires infinitely and will set the empty container as the href
+    //   const link = document.getElementById('download');
+    //   if (this.palette) {
+    //     console.log('download')
+    //     const imageNode = document.getElementById('image-container');
+    //     htmlToImage.toJpeg(imageNode, { quality: 0.95 })
+    //       .then((dataUrl) => {
+    //         link.download = 'wallpaper.jpeg';
+    //         link.href = dataUrl;
+    //         // link.click();
+    //       })
+    //       .catch((error) => {
+    //         console.error('oops, something went wrong!', error);
+    //       });
+    //   }
     },
     selectColor(color) {
       if (this.innerColorSelected) {
@@ -169,6 +170,12 @@ export default {
 .image-upload {
   display: block;
   margin: 20px auto;
+}
+
+#newWallpaper {
+  img {
+    max-height: 200px;
+  }
 }
 
 </style>
