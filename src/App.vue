@@ -17,7 +17,7 @@
       <div ref="bottom" class="gradient bottom"></div>
     </div>
     <input type="file" accept="image/*" @change="displayImage" class="image-upload" />
-    <!-- <button @click="captureNewImage">Display new wallpaper as image</button> -->
+    <button @click="captureNewImage">Display new wallpaper as image</button>
     <a v-if="palette" id="download">Download image</a>
     <div id="newWallpaper"/>
   </div>
@@ -25,6 +25,7 @@
 
 <script>
 import htmlToImage from 'html-to-image';
+import domtoimage from 'dom-to-image';
 import * as Vibrant from '../node_modules/node-vibrant/dist/vibrant';
 
 export default {
@@ -65,18 +66,28 @@ export default {
       top.setAttribute('style', `background: linear-gradient(${this.outerColor}, ${this.innerColor}); width: ${imgWidth}px; height: ${remainingHeight}px;`);
       bottom.setAttribute('style', `background: linear-gradient(${this.innerColor}, ${this.outerColor}); width: ${imgWidth}px; height: ${remainingHeight}px;`);
     },
-    // captureNewImage() {
-    //   const imageNode = document.getElementById('image-container');
-    //   htmlToImage.toPng(imageNode)
-    //     .then((dataUrl) => {
-    //       const img = new Image();
-    //       img.src = dataUrl;
-    //       document.body.appendChild(img);
-    //     })
-    //     .catch((error) => {
-    //       console.error('oops, something went wrong!', error);
-    //     });
-    // },
+    captureNewImage() {
+      const imageNode = document.getElementById('image-container');
+      // htmlToImage.toPng(imageNode)
+      //   .then((dataUrl) => {
+      //     const img = new Image();
+      //     img.src = dataUrl;
+      //     document.body.appendChild(img);
+      //   })
+      //   .catch((error) => {
+      //     console.error('oops, something went wrong!', error);
+      //   });
+
+      domtoimage.toPng(imageNode)
+        .then((dataUrl) => {
+          const img = new Image();
+          img.src = dataUrl;
+          document.body.appendChild(img);
+        })
+        .catch((error) => {
+          console.error('oops, something went wrong!', error);
+        });
+    },
     updateDownloadPath() {
       const link = document.getElementById('download');
       const imageNode = document.getElementById('image-container');
