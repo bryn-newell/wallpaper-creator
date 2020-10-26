@@ -17,6 +17,7 @@ module.exports = {
     'comma-dangle': 'off',
     'semi': 'warn',
     'no-unused-vars': 'warn',
-    'prefer-destructuring': 'warn'
+    'prefer-destructuring': 'warn',
+    'arrow-parens': 'as-needed'
   },
 };

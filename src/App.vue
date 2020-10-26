@@ -18,13 +18,12 @@
     </div>
     <input type="file" accept="image/*" @change="displayImage" class="image-upload" />
     <button @click="captureNewImage">Display new wallpaper as image</button>
-    <a v-if="palette" id="download">Download image</a>
+    <button @click="downloadImage">Download image to desktop</button>
     <div id="newWallpaper"/>
   </div>
 </template>
 
 <script>
-import htmlToImage from 'html-to-image';
 import domtoimage from 'dom-to-image';
 import * as Vibrant from '../node_modules/node-vibrant/dist/vibrant';
 
@@ -51,7 +50,6 @@ export default {
         this.innerColor = this.colorPalette[0];
         this.outerColor = this.colorPalette[2];
         this.applyGradient();
-        this.updateDownloadPath();
       });
     },
     applyGradient() {
@@ -68,18 +66,8 @@ export default {
     },
     captureNewImage() {
       const imageNode = document.getElementById('image-container');
-      // htmlToImage.toPng(imageNode)
-      //   .then((dataUrl) => {
-      //     const img = new Image();
-      //     img.src = dataUrl;
-      //     document.body.appendChild(img);
-      //   })
-      //   .catch((error) => {
-      //     console.error('oops, something went wrong!', error);
-      //   });
-
       domtoimage.toPng(imageNode)
-        .then((dataUrl) => {
+        .then(dataUrl => {
           const img = new Image();
           img.src = dataUrl;
           document.body.appendChild(img);
@@ -88,13 +76,13 @@ export default {
           console.error('oops, something went wrong!', error);
         });
     },
-    updateDownloadPath() {
-      const link = document.getElementById('download');
-      const imageNode = document.getElementById('image-container');
-      htmlToImage.toJpeg(imageNode, { quality: 0.95 })
-        .then((dataUrl) => {
-          link.download = 'wallpaper.jpeg';
+    downloadImage() {
+      domtoimage.toJpeg(document.getElementById('image-container'), { quality: 0.95 })
+        .then(dataUrl => {
+          const link = document.createElement('a');
+          link.download = 'my-image-name.jpeg';
           link.href = dataUrl;
+          link.click();
         })
         .catch((error) => {
           console.error('oops, something went wrong!', error);
@@ -109,11 +97,9 @@ export default {
   watch: {
     innerColor() {
       this.applyGradient();
-      this.updateDownloadPath();
     },
     outerColor() {
       this.applyGradient();
-      this.updateDownloadPath();
     }
   }
 };
