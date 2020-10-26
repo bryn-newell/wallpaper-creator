@@ -46,7 +46,7 @@ export default {
       const v = new Vibrant(img);
       v.getPalette((err, palette) => {
         this.palette = palette;
-        this.colorPalette = Object.values(palette).map((color) => color.getHex());
+        this.colorPalette = Object.values(palette).map(color => color.getHex());
         this.innerColor = this.colorPalette[0];
         this.outerColor = this.colorPalette[2];
         this.applyGradient();
@@ -72,7 +72,7 @@ export default {
           img.src = dataUrl;
           document.body.appendChild(img);
         })
-        .catch((error) => {
+        .catch(error => {
           console.error('oops, something went wrong!', error);
         });
     },
@@ -84,7 +84,7 @@ export default {
           link.href = dataUrl;
           link.click();
         })
-        .catch((error) => {
+        .catch(error => {
           console.error('oops, something went wrong!', error);
         });
     },
