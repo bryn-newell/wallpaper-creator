@@ -27,7 +27,7 @@
         <button @click="captureNewImage" class="mobile-btn">Display new wallpaper as image</button>
         <!-- <button @click="downloadImage" class="download-btn">Download image to desktop</button> -->
       </div>
-      <div id="newWallpaper"/>
+      <img id="newWallpaper"/>
     </template>
   </div>
 </template>
@@ -79,9 +79,8 @@ export default {
       const imageNode = document.getElementById('image-container');
       domtoimage.toPng(imageNode)
         .then(dataUrl => {
-          const img = new Image();
+          const img = document.getElementById('newWallpaper');
           img.src = dataUrl;
-          document.body.appendChild(img);
         })
         .catch(error => {
           console.error('oops, something went wrong!', error);
