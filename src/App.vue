@@ -25,7 +25,7 @@
         <p class="mobile-directions">On mobile it's easiest to display this as a new image and save directly to you photos - click here!</p>
         <p class="download-instructions">Or if you happen to want to download your new wallpaper as a jpeg you can click here!</p>
         <button @click="captureNewImage" class="mobile-btn">Display new wallpaper as image</button>
-        <!-- <button @click="downloadImage" class="download-btn">Download image to desktop</button> -->
+        <button @click="downloadImage" class="download-btn">Download image to desktop</button>
       </div>
       <img id="newWallpaper"/>
     </template>
