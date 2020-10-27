@@ -25,7 +25,7 @@
         <p class="mobile-directions">On mobile it's easiest to display this as a new image and save directly to you photos - click here!</p>
         <p class="download-instructions">Or if you happen to want to download your new wallpaper as a jpeg you can click here!</p>
         <button @click="captureNewImage" class="mobile-btn">Display new wallpaper as image</button>
-        <button @click="downloadImage" class="download-btn">Download image to desktop</button>
+        <!-- <button @click="downloadImage" class="download-btn">Download image to desktop</button> -->
       </div>
       <div id="newWallpaper"/>
     </template>
@@ -87,18 +87,18 @@ export default {
           console.error('oops, something went wrong!', error);
         });
     },
-    downloadImage() {
-      domtoimage.toJpeg(document.getElementById('image-container'), { quality: 0.95 })
-        .then((dataUrl) => {
-          const link = document.createElement('a');
-          link.download = 'my-image-name.jpeg';
-          link.href = dataUrl;
-          link.click();
-        })
-        .catch((error) => {
-          console.error('oops, something went wrong!', error);
-        });
-    },
+    // downloadImage() {
+    //   domtoimage.toJpeg(document.getElementById('image-container'), { quality: 0.95 })
+    //     .then((dataUrl) => {
+    //       const link = document.createElement('a');
+    //       link.download = 'my-image-name.jpeg';
+    //       link.href = dataUrl;
+    //       link.click();
+    //     })
+    //     .catch((error) => {
+    //       console.error('oops, something went wrong!', error);
+    //     });
+    // },
     selectColor(color) {
       if (this.innerColorSelected) {
         this.innerColor = color;
