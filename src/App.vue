@@ -18,7 +18,7 @@
     </div>
     <input type="file" accept="image/*" @change="displayImage" class="image-upload" />
     <button @click="captureNewImage">Display new wallpaper as image</button>
-    <button @click="downloadImage">Download image to desktop</button>
+    <!-- <button @click="downloadImage">Download image to desktop</button> -->
     <div id="newWallpaper"/>
   </div>
 </template>
@@ -76,18 +76,18 @@ export default {
           console.error('oops, something went wrong!', error);
         });
     },
-    downloadImage() {
-      domtoimage.toJpeg(document.getElementById('image-container'), { quality: 0.95 })
-        .then(dataUrl => {
-          const link = document.createElement('a');
-          link.download = 'my-image-name.jpeg';
-          link.href = dataUrl;
-          link.click();
-        })
-        .catch((error) => {
-          console.error('oops, something went wrong!', error);
-        });
-    },
+    // downloadImage() {
+    //   domtoimage.toJpeg(document.getElementById('image-container'), { quality: 0.95 })
+    //     .then(dataUrl => {
+    //       const link = document.createElement('a');
+    //       link.download = 'my-image-name.jpeg';
+    //       link.href = dataUrl;
+    //       link.click();
+    //     })
+    //     .catch((error) => {
+    //       console.error('oops, something went wrong!', error);
+    //     });
+    // },
     selectColor(color) {
       if (this.innerColorSelected) {
         this.innerColor = color;
