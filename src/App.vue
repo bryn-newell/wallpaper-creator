@@ -57,7 +57,7 @@ export default {
       const v = new Vibrant(img);
       v.getPalette((err, palette) => {
         this.palette = palette;
-        this.colorPalette = Object.values(palette).map((color) => color.getHex());
+        this.colorPalette = Object.values(palette).map(color => color.getHex());
         this.innerColor = this.colorPalette[0];
         this.outerColor = this.colorPalette[2];
         this.applyGradient();
@@ -78,27 +78,27 @@ export default {
     captureNewImage() {
       const imageNode = document.getElementById('image-container');
       domtoimage.toPng(imageNode)
-        .then((dataUrl) => {
+        .then(dataUrl => {
           const img = new Image();
           img.src = dataUrl;
           document.body.appendChild(img);
         })
-        .catch((error) => {
+        .catch(error => {
           console.error('oops, something went wrong!', error);
         });
     },
-    // downloadImage() {
-    //   domtoimage.toJpeg(document.getElementById('image-container'), { quality: 0.95 })
-    //     .then((dataUrl) => {
-    //       const link = document.createElement('a');
-    //       link.download = 'my-image-name.jpeg';
-    //       link.href = dataUrl;
-    //       link.click();
-    //     })
-    //     .catch((error) => {
-    //       console.error('oops, something went wrong!', error);
-    //     });
-    // },
+    downloadImage() {
+      domtoimage.toJpeg(document.getElementById('image-container'), { quality: 0.95 })
+        .then(dataUrl => {
+          const link = document.createElement('a');
+          link.download = 'my-image-name.jpeg';
+          link.href = dataUrl;
+          link.click();
+        })
+        .catch(error => {
+          console.error('oops, something went wrong!', error);
+        });
+    },
     selectColor(color) {
       if (this.innerColorSelected) {
         this.innerColor = color;

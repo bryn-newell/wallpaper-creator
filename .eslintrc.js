@@ -18,6 +18,6 @@ module.exports = {
     'semi': 'warn',
     'no-unused-vars': 'warn',
     'prefer-destructuring': 'warn',
-    // 'arrow-parens': ['error', 'as-needed']
+    'arrow-parens': ['error', 'as-needed']
   },
 };
