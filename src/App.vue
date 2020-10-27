@@ -2,12 +2,14 @@
   <div id="app">
     <h1>Wallpaper Creator</h1>
     <p>Create a wallpaper for your phone out of any size image. Upload your image and then select two colors to create the gradient from.</p>
-    <p>Change gradient color</p>
-    <div>
-      <span>Inner color</span>
-      <button @click="innerColorSelected = !innerColorSelected"  class="btn-toggle" :class="{toggled: !innerColorSelected}"></button>
-      <span>Outer color</span>
-    </div>
+    <template v-if="imageUploaded">
+      <p>Change gradient color</p>
+      <div>
+        <span>Inner color</span>
+        <button @click="innerColorSelected = !innerColorSelected"  class="btn-toggle" :class="{toggled: !innerColorSelected}"></button>
+        <span>Outer color</span>
+      </div>
+    </template>
     <div class="color-cards">
       <button v-for="(color, index) in colorPalette" :key="index" :style="`backgroundColor: ${color}`" class="card" @click="selectColor(color)"></button>
     </div>
@@ -17,9 +19,16 @@
       <div ref="bottom" class="gradient bottom"></div>
     </div>
     <input type="file" accept="image/*" @change="displayImage" class="image-upload" />
-    <button @click="captureNewImage">Display new wallpaper as image</button>
-    <button @click="downloadImage">Download image to desktop</button>
-    <div id="newWallpaper"/>
+    <template v-if="imageUploaded">
+      <p>Done creating your new wallpaper?</p>
+      <div class="saving-instructions">
+        <p class="mobile-directions">On mobile it's easiest to display this as a new image and save directly to you photos - click here!</p>
+        <p class="download-instructions">Or if you happen to want to download your new wallpaper as a jpeg you can click here!</p>
+        <button @click="captureNewImage" class="mobile-btn">Display new wallpaper as image</button>
+        <button @click="downloadImage" class="download-btn">Download image to desktop</button>
+      </div>
+      <div id="newWallpaper"/>
+    </template>
   </div>
 </template>
 
@@ -35,11 +44,13 @@ export default {
       palette: null,
       innerColor: null,
       outerColor: null,
-      innerColorSelected: true
+      innerColorSelected: true,
+      imageUploaded: false
     };
   },
   methods: {
     displayImage(e) {
+      this.imageUploaded = true;
       const display = document.getElementById('display');
       const img = URL.createObjectURL(e.target.files[0]);
       display.src = img;
@@ -113,6 +124,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  margin-bottom: 60px;
 }
 
 .btn-toggle {
@@ -140,7 +152,6 @@ export default {
 .color-cards {
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 30px;
   .card {
     height: 100px;
     width: 100px;
@@ -151,25 +162,41 @@ export default {
 }
 
 #image-container {
+  margin: 60px 0 20px 0;
   img {
     max-height: 700px;
   }
   .gradient {
     margin: 0 auto;
     &.bottom {
-      margin-top: -10px;
+      // TO DO: figure out why this is needed?
+      margin-top: -6px;
     }
   }
 }
 
 .image-upload {
   display: block;
-  margin: 20px auto;
+  margin: 0 auto;
 }
 
 #newWallpaper {
   img {
     max-height: 200px;
+  }
+}
+
+.saving-instructions {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  button {
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    border: solid 1px slategray;
+    font-family: inherit;
+    font-weight: 500;
+    margin: 0 auto;
   }
 }
 
